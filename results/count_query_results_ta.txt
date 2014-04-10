@@ -1,0 +1,72 @@
+=== Find Entities === 
+-------
+| cnt |
+=======
+| 0   |
+-------
+=== Find Activities === 
+-------
+| cnt |
+=======
+| 0   |
+-------
+=== Find Agents === 
+-------
+| cnt |
+=======
+| 0   |
+-------
+=== Find wasGeneratedBy === 
+-------
+| cnt |
+=======
+| 836 |
+-------
+=== Find wasDerivedFrom === 
+-------
+| cnt |
+=======
+| 0   |
+-------
+=== Find wasAttributedTo === 
+-------
+| cnt |
+=======
+| 0   |
+-------
+=== Find startedAtTime === 
+-------
+| cnt |
+=======
+| 0   |
+-------
+=== Find endedAtTime === 
+-------
+| cnt |
+=======
+| 0   |
+-------
+=== Find used === 
+-------
+| cnt |
+=======
+| 364 |
+-------
+=== Find wasInformedBy === 
+-------
+| cnt |
+=======
+| 1   |
+-------
+=== Find wasAssociatedWith === 
+-------
+| cnt |
+=======
+| 2   |
+-------
+=== Find actedOnBehalfOf === 
+-------
+| cnt |
+=======
+| 0   |
+-------
