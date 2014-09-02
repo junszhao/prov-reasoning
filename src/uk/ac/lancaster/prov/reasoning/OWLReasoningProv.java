@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.util.Iterator;
 
 import com.hp.hpl.jena.query.Query;
@@ -24,7 +23,19 @@ public class OWLReasoningProv {
 	static String queryStringEntity = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Entity> .}";
 	static String queryStringActivity = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Activity> .}";
 	static String queryStringAgent = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Agent> .}";
-	 
+	
+	static String queryStringAssociation = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Association> .}";
+	static String queryStringUsage = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Usage> .}";
+	static String queryStringGeneration = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Generation> .}";
+	
+	static String queryStringCollection = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Collection> .}";
+	static String queryStringDerivation = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Derivation> .}";
+	static String queryStringAttribution = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Attribution> .}";
+	
+	static String queryStringInfluence = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Influence> .}";
+	static String queryStringDelegation = "select (count (distinct ?s) as ?cnt) where {?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Delegation> .}";
+	
+	
 	static String queryGeneration = "select (count(distinct *) as ?cnt) where {?s <http://www.w3.org/ns/prov#wasGeneratedBy> ?o.}";
 	static String queryDerivation = "select (count(distinct *) as ?cnt) where {?s <http://www.w3.org/ns/prov#wasDerivedFrom> ?o.}";
 	static String queryAttribution = "select (count(distinct *) as ?cnt) where {?s <http://www.w3.org/ns/prov#wasAttributedTo> ?o.}";
@@ -39,13 +50,11 @@ public class OWLReasoningProv {
 		// TODO Auto-generated method stub
 		OWLReasoningProv owlprov = new OWLReasoningProv();
 		
-		OutputStream os = new FileOutputStream("count_query_results_inferred_ta.txt");
+		OutputStream os = new FileOutputStream("count_query_results_inferred_wf.txt");
     	PrintStream writer = new PrintStream(os);
     	
 		try {
-			//owlprov.reasoning(args);
-			//owlprov.validating(args);
-			
+
 			Model schema = FileManager.get().loadModel("/Users/zhaoj/workspace/prov-reasoning/data/provo.ttl");
 		    Model data2 = FileManager.get().loadModel("/Users/zhaoj/workspace/prov-reasoning/data/workflowrun.prov.ttl");
 		    
@@ -54,9 +63,18 @@ public class OWLReasoningProv {
 		    
 		    InfModel infmodel2 = ModelFactory.createInfModel(reasoner2, data2);
 			
-			owlprov.queryInferredProv(queryStringEntity, "Entities", infmodel2, writer);
-			owlprov.queryInferredProv(queryStringActivity, "Activities", infmodel2, writer);
-			owlprov.queryInferredProv(queryStringAgent, "Agents", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringEntity, "Entity", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringActivity, "Activity", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringAgent, "Agent", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringAssociation, "Association", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringUsage, "Usage", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringGeneration, "Generation", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringCollection, "Collection", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringDerivation, "Derivation", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringAttribution, "Attribution", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringInfluence, "Influence", infmodel2, writer);
+			owlprov.queryInferredProv(queryStringDelegation, "Delegation", infmodel2, writer);
+			
 			owlprov.queryInferredProv(queryGeneration, "wasGeneratedBy", infmodel2, writer);
 			owlprov.queryInferredProv(queryDerivation, "wasDerivedFrom", infmodel2, writer);
 			owlprov.queryInferredProv(queryAttribution, "wasAttributedTo", infmodel2, writer);
@@ -95,9 +113,11 @@ public class OWLReasoningProv {
 	        
 	      } finally { qexec.close() ; }
 	    
-	    //printAllStatements(infmodel2);
+	    
 		
 	}
+	
+	
 	
 	public void reasoning(String[] args)throws Exception {
 		Model schema = FileManager.get().loadModel("/Users/zhaoj/workspace/prov-reasoning/data/provo.ttl");
